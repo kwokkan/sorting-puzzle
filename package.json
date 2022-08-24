@@ -1,0 +1,21 @@
+{
+  "name": "sorting-puzzle-js",
+  "version": "1.0.0-beta.1",
+  "source": "src/index.html",
+  "repository": "https://github.com/kwokkan/sorting-puzzle-js.git",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build"
+  },
+  "alias": {
+    "preact/jsx-dev-runtime": "preact/jsx-runtime"
+  },
+  "dependencies": {
+    "preact": "10.10.6"
+  },
+  "devDependencies": {
+    "parcel": "2.7.0",
+    "typescript": "4.7.4"
+  }
+}
