@@ -83,6 +83,14 @@ const performMove = (containers: IContainer[], previousContainerId: number | nul
         return false;
     }
 
+    do {
+        const previousItem = previousContainer.items.shift();
+
+        targetContainer.items.splice(0, 0, previousItem!);
+    } while (targetContainer.items.length < itemsPerContainer && previousContainer.items.length > 0 && previousContainer.items[0].group === targetContainer.items[0].group);
+
+    targetContainer.isSelected = false;
+
     return true;
 };
 
@@ -106,12 +114,10 @@ export const App = () => {
             targetContainer.isSelected = true;
         }
 
-        if (performMove(newContainers, selectedContainerId, id, itemsPerContainer)) {
-            //targetContainer.isSelected = false;
-        }
+        performMove(newContainers, selectedContainerId, id, itemsPerContainer);
 
         setContainers(newContainers);
-        setSelectedContainerId(id);
+        setSelectedContainerId(targetContainer.isSelected ? id : null);
     };
 
     return (
