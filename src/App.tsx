@@ -1,6 +1,9 @@
 import { useState } from "preact/hooks";
+import { Fragment } from "preact/jsx-runtime";
+import { AppSetup } from "./AppSetup";
+import { AppStatus } from "./AppStatus";
 import { Game } from "./Game";
-import { IContainer, IItem } from "./types";
+import { IContainer, IItem, ISettings } from "./types";
 
 const convertToHex = (value: number): string => {
     return Math.floor(value).toString(16).padStart(2, '0');
@@ -62,7 +65,6 @@ const getInitialContainers = (itemsPerContainer: number, numberOfContainers: num
 };
 
 const performMove = (containers: IContainer[], previousContainerId: number | null, targetContainerId: number): boolean => {
-
     if (previousContainerId === null) {
         return false;
     };
@@ -121,6 +123,8 @@ export const App = () => {
     const [selectedContainerId, setSelectedContainerId] = useState<IContainer["id"] | null>(null);
     const [hasWon, setHasWon] = useState<boolean>(false);
 
+    const [appStatus, setAppStatus] = useState<AppStatus>(AppStatus.Setup);
+
     const handleOnSelect = (id: number) => {
         const newContainers = [...containers];
         const targetContainer = newContainers[id];
@@ -143,17 +147,30 @@ export const App = () => {
         setSelectedContainerId(targetContainer.isSelected ? id : null);
     };
 
+    const handleOnSetupConfirm = (settings: ISettings) => {
+        setContainers(getInitialContainers(settings.itemsPerContainer, settings.containerCount, settings.emptyContainerCount));
+        setAppStatus(AppStatus.Playing);
+    };
+
     return (
         <div>
             <h1>Puzzle Sorting</h1>
 
-            {hasWon && (
-                <h2 class="banner">
-                    You won!
-                </h2>
+            {appStatus === AppStatus.Setup && (
+                <AppSetup onConfirm={handleOnSetupConfirm} />
             )}
 
-            <Game containers={containers} onSelect={handleOnSelect}></Game>
+            {appStatus === AppStatus.Playing && (
+                <Fragment>
+                    {hasWon && (
+                        <h2 class="banner">
+                            You won!
+                        </h2>
+                    )}
+
+                    <Game containers={containers} onSelect={handleOnSelect}></Game>
+                </Fragment>
+            )}
         </div>
     );
 };

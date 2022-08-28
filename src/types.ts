@@ -11,3 +11,9 @@ export interface IContainer {
     items: IItem[];
     isSelected: boolean;
 }
+
+export interface ISettings {
+    itemsPerContainer: number;
+    containerCount: number;
+    emptyContainerCount: number;
+}
