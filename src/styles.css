@@ -32,3 +32,8 @@ html {
     .container.selected {
         box-shadow: 0 0 1rem 2px black;
     }
+
+.banner {
+    background-color: red;
+    text-align: center;
+}

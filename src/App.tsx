@@ -61,13 +61,15 @@ const getInitialContainers = (itemsPerContainer: number, numberOfContainers: num
     return containers;
 };
 
-const performMove = (containers: IContainer[], previousContainerId: number | null, targetContainerId: number, itemsPerContainer: number): boolean => {
+const performMove = (containers: IContainer[], previousContainerId: number | null, targetContainerId: number): boolean => {
 
     if (previousContainerId === null) {
         return false;
     };
 
     const targetContainer = containers[targetContainerId];
+
+    const itemsPerContainer = targetContainer.maxItems;
 
     if (targetContainer.items.length === itemsPerContainer) {
         return false;
@@ -94,10 +96,30 @@ const performMove = (containers: IContainer[], previousContainerId: number | nul
     return true;
 };
 
+const isGameWon = (containers: IContainer[]): boolean => {
+    for (const container of containers) {
+        if (container.items.length === 0) {
+            continue;
+        }
+
+        if (container.items.length !== container.maxItems) {
+            return false;
+        }
+
+        const group = container.items[0].group;
+        if (!container.items.every(x => x.group === group)) {
+            return false;
+        }
+    }
+
+    return true;
+};
+
 export const App = () => {
     const [itemsPerContainer, _] = useState<number>(4);
     const [containers, setContainers] = useState<IContainer[]>(getInitialContainers(itemsPerContainer, 4, 2));
     const [selectedContainerId, setSelectedContainerId] = useState<IContainer["id"] | null>(null);
+    const [hasWon, setHasWon] = useState<boolean>(false);
 
     const handleOnSelect = (id: number) => {
         const newContainers = [...containers];
@@ -112,10 +134,11 @@ export const App = () => {
             }
 
             targetContainer.isSelected = true;
+
+            performMove(newContainers, selectedContainerId, id);
         }
 
-        performMove(newContainers, selectedContainerId, id, itemsPerContainer);
-
+        setHasWon(isGameWon(newContainers));
         setContainers(newContainers);
         setSelectedContainerId(targetContainer.isSelected ? id : null);
     };
@@ -123,6 +146,12 @@ export const App = () => {
     return (
         <div>
             <h1>Puzzle Sorting</h1>
+
+            {hasWon && (
+                <h2 class="banner">
+                    You won!
+                </h2>
+            )}
 
             <Game containers={containers} onSelect={handleOnSelect}></Game>
         </div>
