@@ -6,9 +6,9 @@ interface IProps {
 
 export const Container = ({ container }: IProps) => {
     return (
-        <div className="container" style={{ gridTemplateRows:"repeat(4, 1fr)" }}>
+        <div className="container" style={{ gridTemplateRows: `repeat(${container.maxItems}, 1fr)` }}>
             {container.items.map((item, index) => (
-                <div key={index} style={{ backgroundColor: item.backgroundColor }}>
+                <div key={index} style={{ backgroundColor: item.backgroundColor, gridRowEnd: -(container.maxItems - index) }}>
                     {item.group}
                 </div>
             ))}
