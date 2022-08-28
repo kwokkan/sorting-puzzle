@@ -6,6 +6,8 @@ interface IProps {
 }
 
 export const Container = ({ container, onSelect }: IProps) => {
+    const itemDifference = container.maxItems - container.items.length;
+
     return (
         <div
             className={`container ${container.isSelected ? "selected" : ""}`}
@@ -13,7 +15,7 @@ export const Container = ({ container, onSelect }: IProps) => {
             onClick={() => onSelect(container.id)}
         >
             {container.items.map((item, index) => (
-                <div key={index} style={{ backgroundColor: item.backgroundColor, gridRowEnd: -(container.maxItems - index) }}>
+                <div key={index} style={{ backgroundColor: item.backgroundColor, gridRowEnd: -(container.maxItems - itemDifference - index) }}>
                     {item.group}
                 </div>
             ))}
