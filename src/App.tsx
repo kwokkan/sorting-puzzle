@@ -28,6 +28,7 @@ const getInitialContainers = (itemsPerContainer: number, numberOfContainers: num
             id: i,
             items: [],
             maxItems: itemsPerContainer,
+            isSelected: false,
         });
     }
 
@@ -53,20 +54,71 @@ const getInitialContainers = (itemsPerContainer: number, numberOfContainers: num
             id: i,
             items: [],
             maxItems: itemsPerContainer,
+            isSelected: false,
         });
     }
 
     return containers;
 };
 
+const performMove = (containers: IContainer[], previousContainerId: number | null, targetContainerId: number, itemsPerContainer: number): boolean => {
+
+    if (previousContainerId === null) {
+        return false;
+    };
+
+    const targetContainer = containers[targetContainerId];
+
+    if (targetContainer.items.length === itemsPerContainer) {
+        return false;
+    }
+
+    const previousContainer = containers[previousContainerId];
+
+    if (previousContainer.items.length === 0) {
+        return false;
+    }
+
+    if (targetContainer.items.length > 0 && targetContainer.items[0].group !== previousContainer.items[0].group) {
+        return false;
+    }
+
+    return true;
+};
+
 export const App = () => {
-    const [containers, setContainers] = useState<IContainer[]>(getInitialContainers(4, 4, 2));
+    const [itemsPerContainer, _] = useState<number>(4);
+    const [containers, setContainers] = useState<IContainer[]>(getInitialContainers(itemsPerContainer, 4, 2));
+    const [selectedContainerId, setSelectedContainerId] = useState<IContainer["id"] | null>(null);
+
+    const handleOnSelect = (id: number) => {
+        const newContainers = [...containers];
+        const targetContainer = newContainers[id];
+
+        if (id === selectedContainerId) {
+            targetContainer.isSelected = !targetContainer.isSelected;
+        }
+        else {
+            if (selectedContainerId !== null) {
+                newContainers[selectedContainerId].isSelected = false;
+            }
+
+            targetContainer.isSelected = true;
+        }
+
+        if (performMove(newContainers, selectedContainerId, id, itemsPerContainer)) {
+            //targetContainer.isSelected = false;
+        }
+
+        setContainers(newContainers);
+        setSelectedContainerId(id);
+    };
 
     return (
         <div>
             <h1>Puzzle Sorting</h1>
 
-            <Game containers={containers}></Game>
+            <Game containers={containers} onSelect={handleOnSelect}></Game>
         </div>
     );
 };

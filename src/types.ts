@@ -9,4 +9,5 @@ export interface IContainer {
     id: number;
     maxItems: number;
     items: IItem[];
+    isSelected: boolean;
 }

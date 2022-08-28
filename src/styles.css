@@ -12,7 +12,7 @@ html {
     grid-auto-rows: 200px;
     grid-auto-columns: 100px;
     grid-auto-flow: column;
-    grid-gap: 1rem;
+    grid-gap: 2rem;
 }
 
 .container {
@@ -27,4 +27,8 @@ html {
     .container > :last-child {
         border-bottom-left-radius: 7px;
         border-bottom-right-radius: 7px;
+    }
+
+    .container.selected {
+        box-shadow: 0 0 1rem 2px black;
     }

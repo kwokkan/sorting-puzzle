@@ -3,9 +3,10 @@ import { IContainer } from "./types";
 
 interface IProps {
     containers: IContainer[];
+    onSelect: (id: number) => void;
 }
 
-export const Game = ({ containers }: IProps) => {
+export const Game = ({ containers, onSelect }: IProps) => {
 
     return (
         <div className="game">
@@ -13,6 +14,7 @@ export const Game = ({ containers }: IProps) => {
                 <Container
                     key={container.id}
                     container={container}
+                    onSelect={onSelect}
                 />
             ))}
         </div>
