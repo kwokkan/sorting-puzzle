@@ -44,10 +44,13 @@ export const App = () => {
         setSettings(settings);
         setContainers(getInitialContainers(settings));
         setAppStatus(AppStatus.Playing);
+        setHasWon(false);
     };
 
     const restartGame = () => {
         setContainers(getInitialContainers(settings));
+        setAppStatus(AppStatus.Playing);
+        setHasWon(false);
     };
 
     const changeSettings = () => {
