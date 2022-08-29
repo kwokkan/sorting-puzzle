@@ -118,7 +118,11 @@ const isGameWon = (containers: IContainer[]): boolean => {
 };
 
 export const App = () => {
-    const [settings, setSettings] = useState<ISettings | null>(null);
+    const [settings, setSettings] = useState<ISettings>({
+        itemsPerContainer: 4,
+        containerCount: 4,
+        emptyContainerCount: 2,
+    });
     const [containers, setContainers] = useState<IContainer[]>([]);
     const [selectedContainerId, setSelectedContainerId] = useState<IContainer["id"] | null>(null);
     const [hasWon, setHasWon] = useState<boolean>(false);
@@ -154,7 +158,15 @@ export const App = () => {
     };
 
     const restartGame = () => {
-        setContainers(getInitialContainers(settings!.itemsPerContainer, settings!.containerCount, settings!.emptyContainerCount));
+        setContainers(getInitialContainers(settings.itemsPerContainer, settings.containerCount, settings.emptyContainerCount));
+    };
+
+    const changeSettings = () => {
+        setAppStatus(AppStatus.Setup);
+    };
+
+    const cancelSettings = () => {
+        setAppStatus(AppStatus.Playing);
     };
 
     return (
@@ -163,12 +175,20 @@ export const App = () => {
                 Puzzle Sorting
 
                 {appStatus === AppStatus.Playing && (
-                    <button type="button" onClick={restartGame}>Restart</button>
+                    <Fragment>
+
+                        <button type="button" onClick={changeSettings}>Settings</button>
+                        <button type="button" onClick={restartGame}>Restart</button>
+                    </Fragment>
+                )}
+
+                {appStatus === AppStatus.Setup && containers.length > 0 && (
+                    <button type="button" onClick={cancelSettings}>Cancel</button>
                 )}
             </h1>
 
             {appStatus === AppStatus.Setup && (
-                <AppSetup onConfirm={handleOnSetupConfirm} />
+                <AppSetup settings={settings} onConfirm={handleOnSetupConfirm} />
             )}
 
             {appStatus === AppStatus.Playing && (

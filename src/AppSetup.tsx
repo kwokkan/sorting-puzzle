@@ -3,27 +3,24 @@ import { NumericPicker } from "./NumericPicker";
 import { ISettings } from "./types";
 
 interface IProps {
+    settings: ISettings;
     onConfirm: (settings: ISettings) => void;
 }
 
-export const AppSetup = ({ onConfirm }: IProps) => {
-    const [settings, setSettings] = useState<ISettings>({
-        itemsPerContainer: 4,
-        containerCount: 4,
-        emptyContainerCount: 2,
-    });
+export const AppSetup = ({ settings, onConfirm }: IProps) => {
+    const [localSettings, setLocalSettings] = useState<ISettings>(settings);
 
     const handleOnNumericChange = (propName: keyof ISettings, value: number) => {
         const newSettings = {
-            ...settings,
+            ...localSettings,
             [propName]: value,
         };
 
-        setSettings(newSettings);
+        setLocalSettings(newSettings);
     };
 
     const handleOnPlay = () => {
-        onConfirm(settings);
+        onConfirm(localSettings);
     };
 
     return (
@@ -33,7 +30,7 @@ export const AppSetup = ({ onConfirm }: IProps) => {
                 label="Items per container"
                 min={2}
                 max={99}
-                value={settings.itemsPerContainer}
+                value={localSettings.itemsPerContainer}
                 onChange={value => handleOnNumericChange("itemsPerContainer", value)}
             />
 
@@ -42,7 +39,7 @@ export const AppSetup = ({ onConfirm }: IProps) => {
                 label="Container count"
                 min={2}
                 max={99}
-                value={settings.containerCount}
+                value={localSettings.containerCount}
                 onChange={value => handleOnNumericChange("containerCount", value)}
             />
 
@@ -51,7 +48,7 @@ export const AppSetup = ({ onConfirm }: IProps) => {
                 label="Empty containers"
                 min={2}
                 max={99}
-                value={settings.emptyContainerCount}
+                value={localSettings.emptyContainerCount}
                 onChange={value => handleOnNumericChange("emptyContainerCount", value)}
             />
 
