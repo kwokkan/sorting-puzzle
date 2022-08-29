@@ -1,11 +1,11 @@
-import { IContainer, IItem } from "./types";
+import { IContainer, IItem, ISettings } from "./types";
 import { getRandomColor } from "./utils";
 
-export const getInitialContainers = (itemsPerContainer: number, numberOfContainers: number, emptyContainers: number): IContainer[] => {
+export const getInitialContainers = ({ itemsPerContainer, containerCount, emptyContainerCount }: ISettings): IContainer[] => {
     const containers: IContainer[] = [];
     const items: IItem[] = [];
 
-    for (let i = 0; i < numberOfContainers; i++) {
+    for (let i = 0; i < containerCount; i++) {
         items.push(...Array(itemsPerContainer).fill({
             group: i,
             backgroundColor: getRandomColor(),
@@ -36,7 +36,7 @@ export const getInitialContainers = (itemsPerContainer: number, numberOfContaine
         }
     }
 
-    for (let i = containers.length, l = containers.length + emptyContainers; i < l; i++) {
+    for (let i = containers.length, l = containers.length + emptyContainerCount; i < l; i++) {
         containers.push({
             id: i,
             items: [],

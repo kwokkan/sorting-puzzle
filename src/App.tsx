@@ -42,12 +42,12 @@ export const App = () => {
 
     const handleOnSetupConfirm = (settings: ISettings) => {
         setSettings(settings);
-        setContainers(getInitialContainers(settings.itemsPerContainer, settings.containerCount, settings.emptyContainerCount));
+        setContainers(getInitialContainers(settings));
         setAppStatus(AppStatus.Playing);
     };
 
     const restartGame = () => {
-        setContainers(getInitialContainers(settings.itemsPerContainer, settings.containerCount, settings.emptyContainerCount));
+        setContainers(getInitialContainers(settings));
     };
 
     const changeSettings = () => {
