@@ -26,7 +26,7 @@ export const getInitialContainers = ({ itemsPerContainer, containerCount, emptyC
             const randomItemIndex = Math.floor(Math.random() * items.length);
             const randomItem = items[randomItemIndex];
 
-            if (i == currentItems.length - 1 && container.items.every(x => x.group === randomItem.group)) {
+            if (i === (container.maxItems - 1) && currentItems.every(x => x.group === randomItem.group)) {
                 i--;
                 continue;
             }
