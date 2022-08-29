@@ -1,7 +1,7 @@
 {
   "name": "sorting-puzzle-js",
   "version": "1.0.0-beta.1",
-  "source": "src/index.html",
+  "source": "public/index.html",
   "repository": "https://github.com/kwokkan/sorting-puzzle-js.git",
   "license": "MIT",
   "scripts": {
