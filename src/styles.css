@@ -48,6 +48,7 @@ button, input {
     grid-auto-rows: 200px;
     grid-template-columns: repeat(auto-fit, 50px);
     justify-content: center;
+    user-select: none;
 }
 
 .container {
