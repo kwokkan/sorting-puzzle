@@ -1,5 +1,5 @@
 import { useState } from "preact/hooks";
-import { JSXInternal } from "preact/src/jsx";
+import { NumericPicker } from "./NumericPicker";
 import { ISettings } from "./types";
 
 interface IProps {
@@ -13,12 +13,10 @@ export const AppSetup = ({ onConfirm }: IProps) => {
         emptyContainerCount: 2,
     });
 
-    const handleOnChange: JSXInternal.GenericEventHandler<HTMLInputElement> = (event: JSXInternal.TargetedEvent<HTMLInputElement>) => {
-        const propName = event.currentTarget.id;
-
+    const handleOnNumericChange = (propName: keyof ISettings, value: number) => {
         const newSettings = {
             ...settings,
-            [propName]: event.currentTarget.valueAsNumber,
+            [propName]: value,
         };
 
         setSettings(newSettings);
@@ -30,20 +28,32 @@ export const AppSetup = ({ onConfirm }: IProps) => {
 
     return (
         <div className="setup">
-            <div>
-                <label for="itemsPerContainer">Items per container</label>
-                <input type="number" min={2} id="itemsPerContainer" value={settings.itemsPerContainer} onChange={handleOnChange} />
-            </div>
+            <NumericPicker
+                id="itemsPerContainer"
+                label="Items per container"
+                min={2}
+                max={99}
+                value={settings.itemsPerContainer}
+                onChange={value => handleOnNumericChange("itemsPerContainer", value)}
+            />
 
-            <div>
-                <label for="containerCount">Container count</label>
-                <input type="number" min={2} id="containerCount" value={settings.containerCount} onChange={handleOnChange} />
-            </div>
+            <NumericPicker
+                id="containerCount"
+                label="Container count"
+                min={2}
+                max={99}
+                value={settings.containerCount}
+                onChange={value => handleOnNumericChange("containerCount", value)}
+            />
 
-            <div>
-                <label for="emptyContainerCount">Empty containers</label>
-                <input type="number" min={2} id="emptyContainerCount" value={settings.emptyContainerCount} onChange={handleOnChange} />
-            </div>
+            <NumericPicker
+                id="emptyContainerCount"
+                label="Empty containers"
+                min={2}
+                max={99}
+                value={settings.emptyContainerCount}
+                onChange={value => handleOnNumericChange("emptyContainerCount", value)}
+            />
 
             <button type="button" onClick={handleOnPlay}>Play</button>
         </div>
