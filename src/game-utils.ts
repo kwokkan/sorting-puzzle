@@ -100,3 +100,24 @@ export const isGameWon = (containers: IContainer[]): boolean => {
 
     return true;
 };
+
+export const generateStyles = (containers: IContainer[]): string => {
+    const container = containers[0];
+
+    if (!container) {
+        return "";
+    }
+
+    let styles = `.container { grid-template-rows: repeat(${container.maxItems}, 1fr); } `;
+
+    const items = containers.flatMap(x => x.items);
+    const groups = items
+        .filter((item, index) => items.findIndex(fi => fi.group === item.group) === index)
+        .sort((a, b) => a.group - b.group);
+
+    styles += groups.map(x => `.item-g-${x.group} { background-color: ${x.backgroundColor} }`).join(" ");
+
+    styles += Array(container.maxItems).fill(null).map((_, index) => `.item-n-${container.maxItems - index} { grid-row-end: -${(container.maxItems - index)} }`).join(" ");
+
+    return styles;
+};

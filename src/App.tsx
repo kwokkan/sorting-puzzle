@@ -1,9 +1,9 @@
-import { useState } from "preact/hooks";
+import { useLayoutEffect, useState } from "preact/hooks";
 import { Fragment } from "preact/jsx-runtime";
 import { AppSetup } from "./AppSetup";
 import { AppStatus } from "./AppStatus";
 import { Game } from "./Game";
-import { getInitialContainers, isGameWon, performMove } from "./game-utils";
+import { generateStyles, getInitialContainers, isGameWon, performMove } from "./game-utils";
 import { IContainer, ISettings } from "./types";
 
 export const App = () => {
@@ -17,6 +17,8 @@ export const App = () => {
     const [hasWon, setHasWon] = useState<boolean>(false);
 
     const [appStatus, setAppStatus] = useState<AppStatus>(AppStatus.Setup);
+
+    const [headStyles, setHeadStyles] = useState<string>("");
 
     const handleOnSelect = (id: number) => {
         const newContainers = [...containers];
@@ -42,7 +44,11 @@ export const App = () => {
 
     const handleOnSetupConfirm = (settings: ISettings) => {
         setSettings(settings);
-        setContainers(getInitialContainers(settings));
+
+        const containers = getInitialContainers(settings)
+        setContainers(containers);
+        setHeadStyles(generateStyles(containers));
+
         setAppStatus(AppStatus.Playing);
         setHasWon(false);
     };
@@ -60,6 +66,16 @@ export const App = () => {
     const cancelSettings = () => {
         setAppStatus(AppStatus.Playing);
     };
+
+    useLayoutEffect(() => {
+        const element = document.getElementById("app-styles");
+
+        if (!element) {
+            return;
+        }
+
+        element.innerHTML = headStyles;
+    }, [headStyles]);
 
     return (
         <div>
