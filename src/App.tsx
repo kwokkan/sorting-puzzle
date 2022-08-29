@@ -118,8 +118,8 @@ const isGameWon = (containers: IContainer[]): boolean => {
 };
 
 export const App = () => {
-    const [itemsPerContainer, _] = useState<number>(4);
-    const [containers, setContainers] = useState<IContainer[]>(getInitialContainers(itemsPerContainer, 4, 2));
+    const [settings, setSettings] = useState<ISettings | null>(null);
+    const [containers, setContainers] = useState<IContainer[]>([]);
     const [selectedContainerId, setSelectedContainerId] = useState<IContainer["id"] | null>(null);
     const [hasWon, setHasWon] = useState<boolean>(false);
 
@@ -148,13 +148,24 @@ export const App = () => {
     };
 
     const handleOnSetupConfirm = (settings: ISettings) => {
+        setSettings(settings);
         setContainers(getInitialContainers(settings.itemsPerContainer, settings.containerCount, settings.emptyContainerCount));
         setAppStatus(AppStatus.Playing);
     };
 
+    const restartGame = () => {
+        setContainers(getInitialContainers(settings!.itemsPerContainer, settings!.containerCount, settings!.emptyContainerCount));
+    };
+
     return (
         <div>
-            <h1>Puzzle Sorting</h1>
+            <h1>
+                Puzzle Sorting
+
+                {appStatus === AppStatus.Playing && (
+                    <button type="button" onClick={restartGame}>Restart</button>
+                )}
+            </h1>
 
             {appStatus === AppStatus.Setup && (
                 <AppSetup onConfirm={handleOnSetupConfirm} />
