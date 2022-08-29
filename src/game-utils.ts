@@ -1,7 +1,7 @@
 import { IContainer, IItem, ISettings } from "./types";
 import { getRandomColor } from "./utils";
 
-export const getInitialContainers = ({ itemsPerContainer, containerCount, emptyContainerCount }: ISettings): IContainer[] => {
+const createContainersAndItems = ({ itemsPerContainer, containerCount }: ISettings): { containers: IContainer[], items: IItem[] } => {
     const containers: IContainer[] = [];
     const items: IItem[] = [];
 
@@ -19,8 +19,17 @@ export const getInitialContainers = ({ itemsPerContainer, containerCount, emptyC
         });
     }
 
+    return {
+        containers: containers,
+        items: items,
+    };
+};
+
+const populateContainerItems = (containers: IContainer[], items: IItem[]): boolean => {
+    let retryCount = items.length;
+
     for (const container of containers) {
-        for (let i = 0; i < itemsPerContainer; i++) {
+        for (let i = 0; i < container.maxItems; i++) {
             const currentItems = container.items;
 
             const randomItemIndex = Math.floor(Math.random() * items.length);
@@ -28,12 +37,29 @@ export const getInitialContainers = ({ itemsPerContainer, containerCount, emptyC
 
             if (i === (container.maxItems - 1) && currentItems.every(x => x.group === randomItem.group)) {
                 i--;
+
+                // the algorithm isn't smart enough to look into unset containers, so this stops the infinite recursion
+                if (--retryCount === 0) {
+                    return false;
+                }
+
                 continue;
             }
 
             currentItems.push(randomItem);
             items.splice(randomItemIndex, 1);
         }
+    }
+
+    return true;
+}
+
+export const getInitialContainers = (settings: ISettings): IContainer[] => {
+    const { itemsPerContainer, emptyContainerCount } = settings;
+    let { containers, items } = createContainersAndItems(settings);
+
+    while (!populateContainerItems(containers, items)) {
+        ({ containers, items } = createContainersAndItems(settings));
     }
 
     for (let i = containers.length, l = containers.length + emptyContainerCount; i < l; i++) {
