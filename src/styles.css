@@ -7,12 +7,16 @@ html {
     font-family: system-ui, sans-serif;
 }
 
+body {
+    margin: 1rem;
+}
+
 .game {
     display: grid;
-    grid-auto-rows: 200px;
-    grid-auto-columns: 100px;
-    grid-auto-flow: column;
     grid-gap: 2rem;
+    grid-auto-rows: 200px;
+    grid-template-columns: repeat(auto-fit, 50px);
+    justify-content: center;
 }
 
 .container {
@@ -32,6 +36,12 @@ html {
     .container.selected {
         box-shadow: 0 0 1rem 2px black;
     }
+
+.item {
+    display: grid;
+    justify-content: space-around;
+    align-content: space-evenly;
+}
 
 .banner {
     background-color: red;

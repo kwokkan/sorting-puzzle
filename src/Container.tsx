@@ -15,7 +15,7 @@ export const Container = ({ container, onSelect }: IProps) => {
             onClick={() => onSelect(container.id)}
         >
             {container.items.map((item, index) => (
-                <div key={index} style={{ backgroundColor: item.backgroundColor, gridRowEnd: -(container.maxItems - itemDifference - index) }}>
+                <div key={index} className="item" style={{ backgroundColor: item.backgroundColor, gridRowEnd: -(container.maxItems - itemDifference - index) }}>
                     {item.group}
                 </div>
             ))}
