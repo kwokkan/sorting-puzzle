@@ -16,6 +16,19 @@ button, input {
     font-size: 1.5rem;
 }
 
+
+
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+}
+
+
+
 .numeric-picker {
     /*line-height: 2rem;*/
 }
