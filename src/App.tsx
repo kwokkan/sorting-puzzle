@@ -4,6 +4,7 @@ import { AppSetup } from "./AppSetup";
 import { AppStatus } from "./AppStatus";
 import { Game } from "./Game";
 import { generateStyles, getInitialContainers, isGameWon, performMove } from "./game-utils";
+import { CloseIcon, ResetIcon, SettingsIcon } from "./icons";
 import { IContainer, ISettings } from "./types";
 
 export const App = () => {
@@ -79,21 +80,30 @@ export const App = () => {
 
     return (
         <div>
-            <h1>
-                Puzzle Sorting
+            <div className="header">
+                <h1>
+                    Sorting Puzzle
+                </h1>
 
-                {appStatus === AppStatus.Playing && (
-                    <Fragment>
+                <div>
+                    {appStatus === AppStatus.Playing && (
+                        <Fragment>
+                            <button type="button" className="icon-button" onClick={restartGame}>
+                                <ResetIcon />
+                            </button>
+                            <button type="button" className="icon-button" onClick={changeSettings}>
+                                <SettingsIcon />
+                            </button>
+                        </Fragment>
+                    )}
 
-                        <button type="button" onClick={changeSettings}>Settings</button>
-                        <button type="button" onClick={restartGame}>Restart</button>
-                    </Fragment>
-                )}
-
-                {appStatus === AppStatus.Setup && containers.length > 0 && (
-                    <button type="button" onClick={cancelSettings}>Cancel</button>
-                )}
-            </h1>
+                    {appStatus === AppStatus.Setup && containers.length > 0 && (
+                        <button type="button" className="icon-button" onClick={cancelSettings}>
+                            <CloseIcon />
+                        </button>
+                    )}
+                </div>
+            </div>
 
             {appStatus === AppStatus.Setup && (
                 <AppSetup settings={settings} onConfirm={handleOnSetupConfirm} />

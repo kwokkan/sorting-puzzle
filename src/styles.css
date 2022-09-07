@@ -18,10 +18,22 @@ button, input {
 
 
 
+    button:hover {
+        cursor: pointer;
+    }
+
+.icon-button {
+    border: none;
+    background: none;
+    font-size: 1rem;
+}
+
+
+
 .icon {
     display: inline-block;
-    width: 1em;
-    height: 1em;
+    /*width: 1em;
+    height: 1em;*/
     stroke-width: 0;
     stroke: currentColor;
     fill: currentColor;
@@ -33,20 +45,28 @@ button, input {
     /*line-height: 2rem;*/
 }
 
-.numeric-picker label {
-    font-size: 1.5rem;
-    display: block;
-}
+    .numeric-picker label {
+        font-size: 1.5rem;
+        display: block;
+    }
 
-.numeric-picker button, .numeric-picker input {
+    .numeric-picker button, .numeric-picker input {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        width: 5rem;
+    }
+
+    .numeric-picker button {
+        width: 3rem;
+    }
+
+
+
+.header {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content:center;
-    text-align:center;
-    width: 5rem;
-}
-
-.numeric-picker button {
-    width: 3rem;
 }
 
 .setup {
