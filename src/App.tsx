@@ -33,7 +33,7 @@ export const App = () => {
                 newContainers[selectedContainerId].isSelected = false;
             }
 
-            targetContainer.isSelected = true;
+            targetContainer.isSelected = selectedContainerId === null;
 
             performMove(newContainers, selectedContainerId, id);
         }

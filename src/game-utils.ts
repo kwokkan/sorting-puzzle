@@ -103,8 +103,6 @@ export const performMove = (containers: IContainer[], previousContainerId: numbe
         targetContainer.items.splice(0, 0, previousItem!);
     } while (targetContainer.items.length < itemsPerContainer && previousContainer.items.length > 0 && previousContainer.items[0].group === targetContainer.items[0].group);
 
-    targetContainer.isSelected = false;
-
     return true;
 };
 
