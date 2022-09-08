@@ -126,6 +126,11 @@ button, input {
 }
 
 .banner {
-    background-color: red;
     text-align: center;
+    background-color: red;
+    position: absolute;
+    left: 0;
+    right: 0;
+    font-size: 2rem;
+    padding: 1rem;
 }
