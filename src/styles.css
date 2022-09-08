@@ -16,11 +16,11 @@ button, input {
     font-size: 1.5rem;
 }
 
-
-
     button:hover {
         cursor: pointer;
     }
+
+
 
 .icon-button {
     border: none;
@@ -37,7 +37,13 @@ button, input {
     stroke-width: 0;
     stroke: currentColor;
     fill: currentColor;
+    vertical-align: middle;
+    user-select: none;
 }
+
+    .icon > svg {
+        display: flex;
+    }
 
 
 
@@ -48,6 +54,7 @@ button, input {
     .numeric-picker label {
         font-size: 1.5rem;
         display: block;
+        padding: 0.5rem;
     }
 
     .numeric-picker button, .numeric-picker input {
@@ -59,6 +66,12 @@ button, input {
 
     .numeric-picker button {
         width: 3rem;
+    }
+
+    .numeric-picker .picker-wrapper {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
     }
 
 
