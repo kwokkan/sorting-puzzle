@@ -13,3 +13,11 @@ async function activate() {
     );
 }
 addEventListener("activate", e => e.waitUntil(activate()));
+
+addEventListener("fetch", e => {
+    e.respondWith(
+        caches.match(e.request).then(response => {
+            return response || fetch(e.request);
+        })
+    )
+});

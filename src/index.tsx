@@ -8,5 +8,11 @@ if (navigator.serviceWorker) {
     navigator.serviceWorker.register(
         new URL("sw.js", import.meta.url),
         { type: "module" }
-    );
+    )
+        .then(swr => {
+            console.log("Registered service worker.", swr);
+        })
+        .catch(exception => {
+            console.error("Error registering service worker.", exception);
+        });
 }

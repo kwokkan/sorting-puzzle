@@ -2,7 +2,7 @@
   "name": "Sorting Puzzle",
   "description": "Sorting puzzle game.",
   "display": "standalone",
-  "start_url": ".",
+  "start_url": "/",
   "icons": [
     {
       "src": "icons/icon-128.png",
