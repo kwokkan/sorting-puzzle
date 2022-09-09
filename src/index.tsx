@@ -6,7 +6,7 @@ render(<App />, element!);
 
 if (navigator.serviceWorker) {
     navigator.serviceWorker.register(
-        new URL("sw.js", import.meta.url),
+        new URL("../public/sw.js", import.meta.url),
         { type: "module" }
     )
         .then(swr => {
