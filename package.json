@@ -12,7 +12,7 @@
     "preact/jsx-dev-runtime": "preact/jsx-runtime"
   },
   "dependencies": {
-    "preact": "10.10.6"
+    "preact": "10.11.0"
   },
   "devDependencies": {
     "@parcel/packager-raw-url": "2.7.0",
