@@ -4,6 +4,32 @@
     {
       "icon": {
         "paths": [
+          "M512 64c-141.384 0-269.376 57.32-362.032 149.978l-149.968-149.978v384h384l-143.532-143.522c69.496-69.492 165.492-112.478 271.532-112.478 212.068 0 384 171.924 384 384 0 114.696-50.292 217.636-130.018 288l84.666 96c106.302-93.816 173.352-231.076 173.352-384 0-282.77-229.23-512-512-512z"
+        ],
+        "tags": [
+          "undo",
+          "ccw",
+          "arrow"
+        ],
+        "defaultCode": 59749,
+        "grid": 16,
+        "attrs": []
+      },
+      "attrs": [],
+      "properties": {
+        "ligatures": "undo, ccw",
+        "name": "Undo",
+        "order": 7,
+        "id": 102,
+        "prevSize": 32
+      },
+      "setIdx": 0,
+      "setId": 1,
+      "iconIdx": 101
+    },
+    {
+      "icon": {
+        "paths": [
           "M1024 384h-384l143.53-143.53c-72.53-72.526-168.96-112.47-271.53-112.47s-199 39.944-271.53 112.47c-72.526 72.53-112.47 168.96-112.47 271.53s39.944 199 112.47 271.53c72.53 72.526 168.96 112.47 271.53 112.47s199-39.944 271.528-112.472c6.056-6.054 11.86-12.292 17.456-18.668l96.32 84.282c-93.846 107.166-231.664 174.858-385.304 174.858-282.77 0-512-229.23-512-512s229.23-512 512-512c141.386 0 269.368 57.326 362.016 149.984l149.984-149.984v384z"
         ],
         "tags": [
@@ -23,7 +49,7 @@
       "attrs": [],
       "properties": {
         "ligatures": "spinner11, loading12",
-        "name": "spinner11",
+        "name": "Reset",
         "order": 4,
         "id": 133,
         "prevSize": 32,
@@ -54,7 +80,7 @@
       "attrs": [],
       "properties": {
         "ligatures": "cog, gear",
-        "name": "cog",
+        "name": "Settings",
         "order": 2,
         "id": 149,
         "prevSize": 32,
@@ -81,7 +107,7 @@
       "attrs": [],
       "properties": {
         "ligatures": "plus, add",
-        "name": "plus",
+        "name": "Plus",
         "order": 5,
         "id": 267,
         "prevSize": 32,
@@ -109,7 +135,7 @@
       "attrs": [],
       "properties": {
         "ligatures": "minus, subtract",
-        "name": "minus",
+        "name": "Minus",
         "order": 6,
         "id": 268,
         "prevSize": 32,
@@ -138,7 +164,7 @@
       "attrs": [],
       "properties": {
         "ligatures": "cross, cancel",
-        "name": "cross",
+        "name": "Close",
         "order": 3,
         "id": 272,
         "prevSize": 32,
@@ -158,14 +184,25 @@
     "fontPref": {
       "prefix": "icon-",
       "metadata": {
-        "fontFamily": "icomoon"
+        "fontFamily": "icomoon",
+        "majorVersion": 1,
+        "minorVersion": 0
       },
       "metrics": {
         "emSize": 1024,
         "baseline": 6.25,
         "whitespace": 50
       },
-      "embed": false
+      "embed": false,
+      "noie8": true,
+      "ie7": false,
+      "showSelector": false,
+      "selector": "class",
+      "classSelector": ".icon",
+      "showMetrics": true,
+      "showMetadata": false,
+      "showVersion": false,
+      "autoHost": true
     },
     "imagePref": {
       "prefix": "icon-",
@@ -178,10 +215,14 @@
       "height": 32,
       "columns": 16,
       "margin": 16,
-      "overrideSize": false
+      "overrideSize": false,
+      "addTitleTags": false
     },
     "historySize": 50,
     "showCodes": true,
-    "gridSize": 16
+    "gridSize": 16,
+    "quickUsageToken": {
+      "UntitledProject": "ZjBkOGMxM2MxZDg1ZTMzMDExYzQzZmQ5ODcyYjJhNjgjMSMxNjYyMjM5Mzg0IyMjMGFhMDllOGNiYTU1"
+    }
   }
 }
