@@ -3,9 +3,9 @@ import { Fragment } from "preact/jsx-runtime";
 import { AppSetup } from "./AppSetup";
 import { AppStatus } from "./AppStatus";
 import { Game } from "./Game";
-import { generateStyles, getInitialContainers, isGameWon, performMove } from "./game-utils";
-import { CloseIcon, ResetIcon, SettingsIcon } from "./icons";
-import { IContainer, ISettings } from "./types";
+import { generateStyles, getInitialContainers, isGameWon, performMove, undoMove } from "./game-utils";
+import { CloseIcon, ResetIcon, SettingsIcon, UndoIcon } from "./icons";
+import { IContainer, ISettings, IUndoItem } from "./types";
 
 export const App = () => {
     const [settings, setSettings] = useState<ISettings>({
@@ -15,14 +15,18 @@ export const App = () => {
     });
     const [containers, setContainers] = useState<IContainer[]>([]);
     const [selectedContainerId, setSelectedContainerId] = useState<IContainer["id"] | null>(null);
+    const [undoItems, setUndoItems] = useState<IUndoItem[]>([]);
     const [hasWon, setHasWon] = useState<boolean>(false);
 
     const [appStatus, setAppStatus] = useState<AppStatus>(AppStatus.Setup);
 
     const [headStyles, setHeadStyles] = useState<string>("");
 
+    const canUndo = undoItems.length > 0 && !hasWon;
+
     const handleOnSelect = (id: number) => {
         const newContainers = [...containers];
+        const newUndoItems = [...undoItems];
         const targetContainer = newContainers[id];
 
         if (id === selectedContainerId) {
@@ -35,12 +39,23 @@ export const App = () => {
 
             targetContainer.isSelected = selectedContainerId === null;
 
-            performMove(newContainers, selectedContainerId, id);
+            performMove(newContainers, selectedContainerId, id, newUndoItems);
         }
 
         setHasWon(isGameWon(newContainers));
         setContainers(newContainers);
         setSelectedContainerId(targetContainer.isSelected ? id : null);
+        setUndoItems(newUndoItems);
+    };
+
+    const handleUndoMove = () => {
+        const newContainers = [...containers];
+        const newUndoItems = [...undoItems];
+
+        undoMove(newContainers, newUndoItems);
+
+        setContainers(newContainers);
+        setUndoItems(newUndoItems)
     };
 
     const handleOnSetupConfirm = (settings: ISettings) => {
@@ -48,6 +63,7 @@ export const App = () => {
 
         const containers = getInitialContainers(settings)
         setContainers(containers);
+        setUndoItems([]);
         setHeadStyles(generateStyles(containers));
 
         setAppStatus(AppStatus.Playing);
@@ -56,6 +72,7 @@ export const App = () => {
 
     const restartGame = () => {
         setContainers(getInitialContainers(settings));
+        setUndoItems([]);
         setAppStatus(AppStatus.Playing);
         setHasWon(false);
     };
@@ -88,6 +105,9 @@ export const App = () => {
                 <div>
                     {appStatus === AppStatus.Playing && (
                         <Fragment>
+                            <button type="button" className="icon-button" disabled={!canUndo} onClick={handleUndoMove}>
+                                <UndoIcon />
+                            </button>
                             <button type="button" className="icon-button" onClick={restartGame}>
                                 <ResetIcon />
                             </button>

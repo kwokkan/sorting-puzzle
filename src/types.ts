@@ -17,3 +17,9 @@ export interface ISettings {
     containerCount: number;
     emptyContainerCount: number;
 }
+
+export interface IUndoItem {
+    fromContainerId: number;
+    toContainerId: number;
+    count: number;
+}

@@ -1,4 +1,4 @@
-import { IContainer, IItem, ISettings } from "./types";
+import { IContainer, IItem, ISettings, IUndoItem } from "./types";
 import { getRandomColor } from "./utils";
 
 const createContainersAndItems = ({ itemsPerContainer, containerCount }: ISettings): { containers: IContainer[], items: IItem[] } => {
@@ -74,7 +74,7 @@ export const getInitialContainers = (settings: ISettings): IContainer[] => {
     return containers;
 };
 
-export const performMove = (containers: IContainer[], previousContainerId: number | null, targetContainerId: number): boolean => {
+export const performMove = (containers: IContainer[], previousContainerId: number | null, targetContainerId: number, undoItems: IUndoItem[]): boolean => {
     if (previousContainerId === null) {
         return false;
     };
@@ -97,13 +97,38 @@ export const performMove = (containers: IContainer[], previousContainerId: numbe
         return false;
     }
 
+    let undoCount = 0;
     do {
         const previousItem = previousContainer.items.shift();
 
         targetContainer.items.splice(0, 0, previousItem!);
+
+        undoCount++;
     } while (targetContainer.items.length < itemsPerContainer && previousContainer.items.length > 0 && previousContainer.items[0].group === targetContainer.items[0].group);
 
+    undoItems.push({
+        fromContainerId: previousContainer.id,
+        toContainerId: targetContainer.id,
+        count: undoCount,
+    });
+
     return true;
+};
+
+export const undoMove = (containers: IContainer[], undoItems: IUndoItem[]) => {
+    const undoItem = undoItems.pop();
+
+    if (undoItem === undefined) {
+        return;
+    }
+
+    const fromContainer = containers.find(x => x.id === undoItem.fromContainerId)!;
+    const toContainer = containers.find(x => x.id === undoItem.toContainerId)!;
+
+    let undoCount = undoItem.count;
+
+    const undoneItems = toContainer.items.splice(0, undoCount);
+    fromContainer.items.splice(0, 0, ...undoneItems);
 };
 
 export const isGameWon = (containers: IContainer[]): boolean => {
