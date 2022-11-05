@@ -123,6 +123,9 @@ button, input {
     margin-left: -2px;
     margin-right: -2px;
     z-index: -1;
+    color: #fff;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, 1px 1px 0 #000, -1px 1px 0 #000;
+    font-size: larger;
 }
 
 .banner {
